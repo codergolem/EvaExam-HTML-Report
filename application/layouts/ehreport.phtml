@@ -1,0 +1,67 @@
+ <?php
+
+/*  Copyright 2013, Electric Paper Evaluationssysteme GmbH
+ 
+    This file is part of EvaExam HTML Report
+ 
+    EvaExam HTML Report is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    EvaExam HTML is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with EvaExam HTML Report.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+ 
+/**
+ * EvaExam HTML Report Layout File.
+ * This files is used as layout template by the zend framework. The view 
+ * content of the HTML Report is automatically inserted in this file by calling
+ * $this->layout()->content
+ * @author Mario Diaz
+ */
+ 
+?>
+
+
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Exam HTML Report</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=9" />
+        
+        <link rel="stylesheet" href="application/layouts/css/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="application/layouts/css/report.css">
+        <link rel="stylesheet" href="application/layouts/css/jquery.jqplot.css">
+        
+        <script type="text/javascript" src="application/layouts/scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="application/layouts/scripts/bootstrap.js"></script>
+        <script type="text/javascript" src="application/layouts/scripts/jquery.jqplot.min.js"></script>
+        <script type="text/javascript" src="application/layouts/scripts/jqplot.pieRenderer.min.js"></script>
+        <script type="text/javascript" src="application/layouts/scripts/ehreport.js"></script>
+        
+        <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="application/layouts/scripts/excanvas.js"></script><![endif]-->
+        
+    </head>
+    
+     <body>
+         <div id="contain-wrapper">
+            <div id="page-content">
+                <div id="headersite" class="clearfix">
+                    <span class="inner"><img class="logo" src="images/logos/organization/system.png" alt="Logo EvaExam"></span>
+                </div> 
+                <?php echo $this->layout()->content ?>
+            </div>
+        </div>
+        <div id="footer">Copyright 2013 Electric Paper Evaluationssysteme GmbH </div>
+     
+    </body>
+   
+</html>

@@ -1,0 +1,250 @@
+/*!  Copyright 2013, Electric Paper Evaluationssysteme GmbH
+ 
+    This file is part of EvaExam HTML Report
+ 
+    EvaExam HTML Report is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    EvaExam HTML is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with EvaExam HTML Report.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+/*! CSS Rules that define the HTML Report layout, some of them overwrite the
+*   rules defined in the file bootstrap.css
+*   @autor: Mario Diaz
+*/
+
+
+
+
+html,body, #contain-wrapper {
+    height: 100%;
+}
+
+body > #contain-wrapper {
+    height: auto;
+    min-height: 100%;
+}
+
+#page-content {
+    padding-bottom: 3em;
+}
+
+
+#headersite {
+    background-color: white;
+    border-bottom: 2px solid #649D4A;
+    margin: 0px -5px 10px -5px;
+    padding: 10px;
+    
+}
+
+#headersite .inner {
+    width: 1100px;
+    margin: auto;
+    display: block;
+}
+
+.ehcontainer {
+    width: auto;
+    max-width:1100px;
+    margin: auto;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(241,237,237);
+    margin-bottom: 40px;
+   
+   
+}
+
+.ehcontainer .navbar-inner {
+    filter:none;
+    background-image: none;
+    background-color: rgb(132,214,254);
+    color: white;
+    
+}
+
+.report_section {
+    background-color: rgb(240,240,240);        
+}
+
+
+
+#sectioncontent div.ehcontainer {
+    min-height: 350px;
+}
+
+#reportheader {
+    
+    padding: 10px;
+    color: #777777;
+    background:linear-gradient(to bottom,#F8F8FF 0%,#e9e9ff 100%);
+	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#F8F8FF),color-stop(100%,#e9e9ff));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F8F8FF',endColorstr='#e9e9ff',GradientType=0);
+    border: 4px solid white;
+    
+    
+}
+
+#reportheader .placeholder {
+    width: 500px;
+    margin-right: 5px;
+    float: left;
+}
+
+#reportheader p {
+    padding: 0px;
+    margin: 0px;
+}
+
+
+#wrapper-nav-bar {
+    width: auto;
+    max-width:1100px;
+    margin-left : auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+  
+    
+}
+
+#nav_bar_section a {
+    color: rgb(114,114,114);
+}
+
+#filter_bar {
+    width: 15%;
+    margin: 10px;
+    float: left;
+    background: #DEE3EA url(../../../images/ui/bgmain2.gif) repeat top center;
+    
+}
+
+#inner_filter_bar {
+     padding: 10px;
+}
+
+.filter_button_group {
+    width: 100%;
+   
+}
+
+.filter_button {
+    width: 100%;
+    float: left;
+    padding: 5px 0px;
+    margin:  5px 0px;
+}
+
+.btn-group + .btn-group {
+    margin-left: 0px;
+}
+
+
+#exam_report_table_container {
+   width: 70%; 
+   margin: 0px 5px;
+   float: left;
+}
+
+#participant_mainsection_nav_container,#participant_questionsection_nav_container {
+    width: 50%;
+    margin:0 auto;
+    text-align: center;
+}
+
+#participant_mainsection_nav, #participant_questionsection_nav{
+    margin: 25px 0;
+}
+
+
+#sectioncontent .ehcontainer {
+    padding-bottom: 20px;
+}
+
+#participant_table {
+    width:  100%;
+    margin: auto;
+}
+.ehcontainer .table th,.ehcontainer .table td {
+    text-align: center;
+}
+
+#question_results_table {
+    width: 90%;
+    margin-left: 30px;
+    margin-right: 10px;
+    float: left;
+}
+
+#question_nav_container {
+    margin-left: 81%;
+    width: 180px;
+        
+}
+
+#back_question_arrow{
+    visibility: hidden;
+}
+
+#general_statistics_table {
+    width: 95%;
+    margin: auto;
+     
+}
+
+#grading_criteria_table ,#grade_passed_table,#grade_participant_table {
+    width: 95%;
+    margin: 20px auto;
+}
+
+#grade_passed_table,#grade_participant_table, .report_graphic_container {
+    width: 45%;
+    margin: 20px 2%;
+    float: left;
+}
+
+
+
+.hidden {
+    display: none; 
+}
+
+.clearfix {
+    clear: both;
+}
+
+.clearfix:after {
+content: " ";
+margin: 0;
+height: 0;
+padding: 0;
+display: block;
+clear: both;
+visibility: hidden;
+
+}
+
+
+#footer{
+    
+    margin-top: -1.2em;
+    clear: both;
+    background: #cff;
+    height: 1.3em;
+    position: relative;
+    z-index: 10;
+}
+

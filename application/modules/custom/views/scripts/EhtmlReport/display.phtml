@@ -1,0 +1,342 @@
+<?php
+
+/*  Copyright 2013, Electric Paper Evaluationssysteme GmbH
+ 
+    This file is part of EvaExam HTML Report
+  
+    EvaExam HTML Report is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    EvaExam HTML is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with EvaExam HTML Report.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+/**
+ * Component of the view that contains the user interface of the HTML Report.
+ * @author Mario Diaz
+ */
+
+?>
+
+
+L<div id="reportheader-wrapper" class="clearfix ehcontainer">
+    <div id="reportheader" class="clearfix">
+        <div id="placeholder-one" class="placeholder">
+            <p>
+            <h4><?php echo $this->translator->_('S_EXAM_NAME').' : '?><u><?echo $this->Report->getPlaceHolder('examName'); ?></u></h4>
+            </p>
+        </div>
+        <div id="placeholder-two" class="placeholder">
+            <p>
+                <h4><?php echo $this->translator->_('S_EXAMINER_NAME').' : '?><u><?echo $this->userFirstName.' '.$this->userSecondName; ?></u></h4>
+            </p>
+        </div>
+        <div id="placeholder-three" class="placeholder">
+            <p> <h4><?php echo $this->translator->_('S_FORM_NAME').' : '?><u><? echo $this->Report->getPlaceHolder('formShortName'); ?></u></h4></p>
+        </div>
+        <div id="placeholder-four" class="placeholder">
+            <p><h4><?php echo $this->translator->_('S_RESPONSE_RATE').' : '?><u><? echo $this->Report->getPlaceHolder('examCount'); ?></u></h4></p>
+        </div>
+    </div>
+</div>
+
+
+<div id="sectioncontent" class="clearfix">
+    <div id='wrapper-nav-bar' class="clearfix">
+        <ul id ='nav_bar_section'class="nav nav-tabs">
+                <li><a id="exam_report_link" href="#"><h4><?php echo $this->translator->_('S_EXAM_REPORT_TITLE'); ?></h4></a></li>
+                <li><a id="questions_results_link" href="#"><h4><?php echo $this->translator->_('S_QUESTIONS_RESULT_TITLE'); ?></h4></a></li>
+                <li><a id="grade_report_link" href='#'><h4>
+                <?php if (!is_null($this->Report->getGradingKey())) 
+                    {
+                        echo $this->translator->_('S_GRADE_REPORT_TITLE'); 
+                    }?>
+            
+                        </h4></a>
+                </li>
+                <li><a id="general_statistics_link" href="#"><h4><?php echo $this->translator->_('S_GENERAL_STATISTICS_TITLE'); ?></h4></a></li>
+        </ul>
+    </div>
+    
+    
+    <div id="exam_report_section" class="clearfix ehcontainer report_section">
+        <div class="navbar clearfix">
+            <div class="navbar-inner">
+                <a class="brand" href="#">
+                    <?php echo $this->translator->_('S_EXAM_REPORT_TITLE'); ?>
+                </a>
+           </div>
+        </div>
+        
+        
+        <div id="filter_bar">
+        <?php if (!(is_null($this->Report->getGradingKey()))):?>
+          <div id="inner_filter_bar">
+            <h4><strong><?php echo $this->translator->_('S_FILTER_SECTION_TITLE'); ?></strong></h4>
+            <button id="show_all_button" class="btn filter_button"><?php echo $this->translator->_('S_FILTER_SHOW_ALL_LABEL'); ?></button>
+            
+            <div class="btn-group filter_button_group">
+                <a class="btn dropdown-toggle filter_button" data-toggle="dropdown" href="#">
+                    <?php echo $this->translator->_('S_FILTER_BY_GRADE_LABEL'); ?>
+                    <span class="caret"></span>
+                </a>
+                <ul id="grade_filter_button"class="dropdown-menu">
+                    <?php foreach ($this->gradeArray as $parNote) :
+                        ?>   <li><a id="<?php echo "link_note_id_".$parNote->getId(); ?>" class="grade_filter_link" href="#"><?php echo $parNote->getName(); ?></a></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            
+           <div class="btn-group filter_button_group">
+                <a class="btn dropdown-toggle filter_button" data-toggle="dropdown" href="#">
+                    <?php echo $this->translator->_('S_FILTER_BY_PASSED_LABEL'); ?>
+                    <span class="caret"></span>
+                </a>
+            <ul class="dropdown-menu">
+                <li><a id="show_passed_button"><?php echo $this->translator->_('S_PASSED'); ?></a></li>
+                <li><a id="show_failed_button"><?php echo $this->translator->_('S_FAILED'); ?></a></li>
+            </ul>
+           </div> 
+          </div>
+       <?php endif; ?>
+       </div>
+       
+       
+        
+       <div id="exam_report_table_container"> 
+            <table id="participant_table" class="table table-striped table-bordered">
+                <colgroup>
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>N</th>
+                        <th><?php echo $this->translator->_('S_PARTICIPANT_ID_HEADER'); ?></th>
+                        <th><?php echo $this->translator->_('S_TOTAL_POINTS'); ?></th>
+                            <?php if (!is_null($this->Report->getGradingKey())) 
+                                  { 
+                                    echo '<th>'.$this->translator->_('S_NOTE').'</th>';
+                                    echo '<th>'.$this->translator->_('S_PASSED').'</th>'; 
+                                  } ?>
+                    </tr>
+                </thead>
+                
+                    <?php echo $this->partial('mainResultTable.phtml',array(
+                               'maxParticipantsToDisplay'   => $this->maxParticipantsToDisplay,
+                               'participantsResult'         => $this->participantsResult));?>
+                
+                
+                           
+             </table>
+           
+        </div>
+
+        <? if ($this->displayParticipantPages): ?>
+        <button type="button" id ="mainsection_fullview_button"  class="btn f_view_button" ><i class="icon-align-justify"></i></button>
+        <div id="participant_mainsection_nav_container" class="pagination clearfix">
+            <ul id="participant_mainsection_nav">
+                <li class="disabled">
+                    <a href="#" id="participant_mainsection_previous_button" class="p_nav_button"><? echo "<<"; ?></a>
+                </li>
+                <li>
+                    <span id="participant_mainsection_page_counter">1</span><span>|</span><span><? echo ceil($this->participantCount/$this->maxParticipantsToDisplay); ?></span>
+                </li>
+                <li>
+                    <a href="#" id="participant_mainsection_next_button" class="p_nav_button"><? echo ">>"; ?></a>
+                </li>
+            </ul>     
+       </div>
+       <?endif; ?>
+                
+   </div>
+     
+    
+   <div id="questions_results_section" class="clearfix ehcontainer report_section">
+       <div class="navbar clearfix">
+            <div class="navbar-inner">
+                <a class="brand" href="#">
+                    <?php echo $this->translator->_('S_QUESTIONS_RESULT_TITLE'); ?>
+                </a>
+           </div>
+        </div>
+       
+        <? if ($this->displayQuestionPages): ?>
+       <div id="question_nav_container" class="clearfix">    
+           <p>
+               <span id="current_question_segment">1-<? echo $this->maxQuestionsToDisplay; ?></span> | <? echo $this->questionCount; ?>
+               <button id="back_question_arrow"  class="q_nav_button"><i class="icon-arrow-left"></i></button>
+               <button id="next_question_arrow" href="#" class="q_nav_button"><i class="icon-arrow-right"></i></button>
+               <span id="maxQuestionsToDisplay" class="hidden"><? echo $this->maxQuestionsToDisplay; ?></span>
+           </p>
+           <p id="q_page_counter" class="hidden">1</p>
+       </div>
+       <? endif; ?>
+       
+       <table id="question_results_table" class= "table table-striped table-bordered">
+           <thead>
+           <tr>
+               <th>N</th>
+               <th><?php echo $this->translator->_('S_PARTICIPANT_ID_HEADER'); ?></th>
+               <th><?php echo $this->translator->_('S_TOTAL_POINTS'); ?></th>
+               
+               
+                   <?php echo $this->partial('questionsTable.phtml',array(
+                         'totalQuestions'        => $this->questionCount,
+                         'isHeader'              => true,
+                         'maxQuestionsToDisplay' => $this->maxQuestionsToDisplay)); ?>
+           </tr>
+           </thead>
+           
+                  <?php echo $this->partial('questionTableBody.phtml',array(
+                      'maxParticipantsToDisplay'    => $this->maxParticipantsToDisplay,
+                      'participantsResult'          => $this->participantsResult,
+                      'questionCount'               => $this->questionCount,
+                      'maxQuestionsToDisplay'       => $this->maxQuestionsToDisplay))    
+                   ?>
+                                                 
+                             
+       </table>
+
+       <? if ($this->displayParticipantPages): ?>
+       <button type="button" id ="questionsection_fullview_button"  class="btn f_view_button" ><i class="icon-align-justify"></i></button>
+       <div id="participant_questionsection_nav_container" class="pagination clearfix">
+            <ul id="participant_questionsection_nav">
+                <li class="disabled">
+                    <a href="#" id="participant_questionsection_previous_button" class="p_nav_button"><? echo "<<"; ?></a>
+                </li>
+                <li>
+                   <span id="participant_questionsection_page_counter">1</span><span>|</span><span><? echo ceil($this->participantCount/$this->maxParticipantsToDisplay); ?></span>
+                </li>
+                <li>
+                    <a href="#" id="participant_questionsection_next_button" class="p_nav_button"><? echo ">>"; ?></a>
+                </li>
+            </ul>     
+       </div>
+       <? endif; ?>
+   </div>
+    
+  <div id="general_statistics_section" class="clearfix ehcontainer report_section">
+      <div class="navbar clearfix">
+            <div class="navbar-inner">
+                <a class="brand" href="#">
+                    <?php echo $this->translator->_('S_GENERAL_STATISTICS_TITLE'); ?>
+                </a>
+           </div>
+      </div>
+      <table id="general_statistics_table" class= "table table-striped table-bordered">
+           <thead>
+               <tr>
+                   <th><?php echo $this->translator->_('S_N_PARTICIPANTS'); ?></th>
+                   <th><?php echo $this->translator->_('S_REACHABLE_POINTS'); ?></th>
+                   <th><?php echo $this->translator->_('S_MEAN'); ?></th>
+                   <th><?php echo $this->translator->_('S_MAX_POINTS'); ?></th>
+                   <th><?php echo $this->translator->_('S_MIN_POINTS'); ?></th>
+                   <th><?php echo $this->translator->_('S_MEDIAN'); ?></th>
+                   <th><?php echo $this->translator->_('S_STANDART_DEVIATION'); ?></th>
+              </tr>    
+           <tbody>
+               <tr>
+                   <td><?php echo $this->participantCount; ?></td>
+                   <td><?php echo $this->Report->getPlaceHolder('maxReachablePoints'); ?></td>
+                   <td><?php echo $this->mean; ?></td>
+                   <td><?php echo max($this->Report->getParticipantTotalPointsArray()); ?></td>
+                   <td><?php echo min($this->Report->getParticipantTotalPointsArray()); ?></td>
+                   <td><?php echo $this->median; ?></td>
+                   <td><?php echo $this->stdev; ?></td>
+               </tr>
+           </tbody>   
+       </table>
+                     
+   </div>
+    
+   <?php if (!(is_null($this->Report->getGradingKey()))): ?>
+   <div id="grade_report_section" class="clearfix ehcontainer report_section">
+       <div class="navbar clearfix">
+            <div class="navbar-inner">
+                <a class="brand" href="#">
+                    <?php echo $this->translator->_('S_GRADE_REPORT_TITLE'); ?>
+                </a>
+           </div>
+        </div>
+        
+        <table id="grading_criteria_table" class= "table table-striped table-bordered">
+            <thead>
+                <tr>
+                   <th><?php echo $this->translator->_('S_THRESHOLD_GRADE_NAME'); ?></th>
+                   <th><?php echo $this->translator->_('S_THRESHOLD_GRADE_PERCENTAGE'); ?></th>
+                   <th><?php echo $this->translator->_('S_THRESHOLD_GRADE_POINTS'); ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                   <td><? echo $this->Report->getGradingKey()->getPassedGrade()->getName(); ?></td>
+                   <td><? echo $this->Report->getGradingKey()->getMinPassedPercentage()."%"; ?></td>
+                   <td><? echo $this->Report->getPlaceHolder('approvalThreshold'); ?></td>
+                </tr>
+           </tbody>
+       </table>
+      
+       
+       
+       <table id="grade_passed_table" class= "table table-striped table-bordered">
+           <thead>
+              <tr>
+                  <th><?php echo $this->translator->_('S_STATUS_RESULT'); ?></th>
+                  <th><?php echo $this->translator->_('S_N_PARTICIPANTS'); ?></th>
+                  <th><?php echo $this->translator->_('S_PERCENTAGE'); ?></th>
+              </tr>
+           </thead>
+           <tbody>
+               <tr>
+                   <td id="passed_label_cell"><?php echo $this->translator->_('S_PASSED'); ?></td>
+                   <td id="passed_value_cell"><?php echo count($this->PassedParticipants); ?></td>
+                   <td id="passed_percentage_cell"><?php echo EHMathUtils::calculatePercentage($this->participantCount,count($this->PassedParticipants))."%"; ?></td>
+               </tr>
+               <tr>
+                   <td id="failed_label_cell"><?php echo $this->translator->_('S_FAILED'); ?></td>
+                   <td id="failed_value_cell"><?php echo count($this->FailedParticipants); ?></td>
+                   <td id="failed_percentage_cell"><?php echo EHMathUtils::calculatePercentage($this->participantCount,count($this->FailedParticipants))."%"; ?></td>
+               </tr>
+               
+           </tbody>
+       </table>
+       
+       <table id="grade_participant_table" class= "table table-striped table-bordered">
+           <thead>
+               <tr>
+                   <th><?php echo $this->translator->_('S_NOTE'); ?></th>
+                   <th><?php echo $this->translator->_('S_SCORE_RANGE'); ?></th>
+                   <th><?php echo $this->translator->_('S_N_PARTICIPANTS'); ?></th>
+                   <th><?php echo $this->translator->_('S_PARTICIPANTS_PERCENTAGE'); ?></th>
+              </tr>    
+           <tbody id="grade_participant_table_body">
+               
+                   <?php foreach ($this->gradeArray as $parNote) :
+                       ?>   <tr>
+                                <td><?php echo $parNote->getName(); ?></td>
+                                <td><?php echo $parNote->getPercentage()."%"; ?></td>
+                                <td><?php echo $this->participantsByNote[$parNote->getName()]; ?></td>
+                                <td><?php echo EHMathUtils::calculatePercentage($this->participantCount,$this->participantsByNote[$parNote->getName()])."%"; ?></td>
+                            </tr>
+                  <?php endforeach; ?>
+           </tbody>   
+       </table>
+       
+       <div id="grade_passed_graphic" class="report_graphic_container"></div>
+       
+       <div id="participant_grade_graphic" class="report_graphic_container"></div>
+                     
+   </div>
+   <?php endif; ?>
+    
+</div>
+            
+

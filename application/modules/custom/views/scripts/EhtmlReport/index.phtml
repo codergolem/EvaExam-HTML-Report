@@ -1,0 +1,51 @@
+<?php
+
+/*  Copyright 2013, Electric Paper Evaluationssysteme GmbH
+ 
+    This file is part of EvaExam HTML Report
+  
+    EvaExam HTML Report is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    EvaExam HTML is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with EvaExam HTML Report.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+/** Component of the view that displays the lisf of exams and links to the
+ *  corresponding HTML Report.
+ * @author Mario Diaz
+ */
+
+?>
+
+<table class="VCTable">
+    <h1><?php echo $this->translator->_('S_EXAM_REPORT'); ?></h1>
+    <thead>
+    <th><?php echo $this->translator->_('S_EXAM_NAME'); ?></th>
+    <th><?php echo $this->translator->_('S_EXAM_ID'); ?></th>
+    <th><?php echo $this->translator->_('S_EXAM_COUNT'); ?></th>
+    <th><?php echo $this->translator->_('S_EXAM_REPORT'); ?></th>
+    </thead>
+    <tbody>
+    <?php foreach ($this->exams as $exam):
+             if ($exam->Status == 1): 
+            ?> <tr>
+               <td align="center"><?php echo $exam->Name; ?></td>
+               <td align="center"><?php echo $exam->ExamId; ?></td>
+               <td align="center"><?php echo $exam->ExamCount; ?></td>
+               <td align="center"><a href="index.php?mca=custom/ehtmlreport/display&examid=<?php echo $exam->ExamId; ?>&PHPSESSID=<?php echo session_id(); ?> " target="_blank">Open</a></td>
+              
+              </tr>
+            
+     <?php  endif;
+        endforeach; ?>
+    </tbody>
+</table>

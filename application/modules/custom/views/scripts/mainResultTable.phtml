@@ -1,0 +1,72 @@
+<?php
+
+/*  Copyright 2013, Electric Paper Evaluationssysteme GmbH
+ 
+    This file is part of EvaExam HTML Report
+  
+    EvaExam HTML Report is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    EvaExam HTML is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with EvaExam HTML Report.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+/**
+ * Partial Helper for building participant results table 
+ */
+?>
+ 
+ <tbody id="participant_mainsection_page_1" class="display">
+ <? 
+ $nextQPageBreak = $this->maxParticipantsToDisplay;
+ for ($parPageCounter = $parCounter = 1; $parCounter <= count($this->participantsResult) ; $parCounter++):
+      
+      $currentParResult = $this->participantsResult[$parCounter - 1];
+      if ($parCounter > $nextQPageBreak) 
+      {
+            $nextQPageBreak += $this->maxParticipantsToDisplay;
+            echo "</tbody>";
+            $parPageCounter++;
+            echo '<tbody id="participant_mainsection_page_'.$parPageCounter.'"class="hidden">';
+                                
+      } 
+  ?>
+
+ 
+    
+    <tr>
+        <td><?php echo $parCounter ?> </td>
+        <td><?php echo $currentParResult->getParticipantId(); ?> </td>
+        <td><?php echo $currentParResult->getTotalPoints(); ?> </td>
+        
+        
+         
+ <?php
+    
+    if (!($currentParResult->getNote() === ""))
+    {   
+          
+        echo '<td class="part_note_id_'.$currentParResult->getGradeId().'">'.$currentParResult->getNote().'</td>';
+     
+        if($currentParResult->isPassed()):
+        
+            ?> <td class="passed"><i class='icon-ok'></i></td> <?php
+           
+        
+        else: 
+        
+            ?> <td class="failed"><i class='icon-remove'></i></td> <?php
+        endif;
+    }
+ ?>
+    </tr>
+ <?php endfor; ?>
+ </tbody> 
